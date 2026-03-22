@@ -1,8 +1,18 @@
-export default function Home() {
+import { getServerSession } from "next-auth"
+import Link from "next/link"
+
+export default async function Home() {
+  const session = await getServerSession();
+
   return (
-    <div style={{ padding:"40px" }}>
-     <h1>SplitKaro</h1>
-     <p>Split the expenses with friends. No more worries.</p>
+    <div >
+      <h1>SplitKaro</h1>
+      {
+        session ? (
+          <p>Welcome, {session.user?.name}</p>
+        ) : (
+          <Link href="/api/auth/signin" >Login with Google</Link>
+        )}
     </div>
   )
 }
